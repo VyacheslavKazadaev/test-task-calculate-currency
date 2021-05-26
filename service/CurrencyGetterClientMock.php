@@ -6,11 +6,9 @@ class CurrencyGetterClientMock extends CurrencyGetterClient
     public function requestForGetCurrency(): array
     {
         return [
-            'Valute' => [
-                'USD' => [
-                    'Name'  => 'Доллар США',
-                    'Value' => 70,
-                ],
+            'USD' => [
+                'Name'  => 'Доллар США',
+                'Value' => 70,
             ],
         ];
     }

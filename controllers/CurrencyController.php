@@ -5,6 +5,7 @@ use app\models\CurrencyRequestModel;
 use app\service\CurrencyService;
 use Yii;
 use yii\filters\VerbFilter;
+use yii\web\BadRequestHttpException;
 
 class CurrencyController extends JsonController
 {
@@ -31,7 +32,16 @@ class CurrencyController extends JsonController
 
     public function actionIndex()
     {
-        $requestModel = new CurrencyRequestModel(Yii::$app->request->queryParams);
-
+        try {
+            $requestModel = new CurrencyRequestModel(Yii::$app->request->queryParams);
+            if (!$requestModel->validate()) {
+                throw new \Exception('Bad params.');
+            }
+            $response = $this->currencyService->loadAndCalculateCurrency($requestModel);
+        } catch (\Exception $e) {
+            Yii::error($e->getMessage());
+            return ['error' => 'Bad request'];
+        }
+        return $response->toArray();
     }
 }

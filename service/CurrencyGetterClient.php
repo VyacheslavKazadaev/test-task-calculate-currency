@@ -3,8 +3,13 @@ namespace app\service;
 
 class CurrencyGetterClient extends Service
 {
+    /**
+     * @return array [['USD': ['Name' => {string}, 'Value' => {float} ]],]
+     * @throws \Exception
+     */
     public function requestForGetCurrency(): array
     {
+        $result = null;
         try {
             $ch = curl_init();
             curl_setopt_array($ch, [
@@ -26,13 +31,14 @@ class CurrencyGetterClient extends Service
             }
 
             $info = curl_getinfo($ch);
-            if (empty($info['http_code']) || $info['http_code'] != 200) {
+            if (empty($info['http_code']) || $info['http_code'] != 200 || !is_array($result)) {
                 throw new \Exception('Currency Response: [' . json_encode($info) . '], response: ' . $response);
             }
+            $result = json_decode($response, true);
         } finally {
             curl_close($ch);
         }
 
-        return json_decode($response, true);
+        return $result['Valute'];
     }
 }
