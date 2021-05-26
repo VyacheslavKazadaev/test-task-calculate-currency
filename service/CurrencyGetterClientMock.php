@@ -8,13 +8,8 @@ class CurrencyGetterClientMock extends CurrencyGetterClient
         return [
             'Valute' => [
                 'USD' => [
-                    'ID'       => "R01235",
-                    'NumCode'  => "840",
-                    'CharCode' => "USD",
-                    'Nominal'  => 1,
-                    'Name'     => "Доллар США",
-                    'Value'    => 73.4737,
-                    'Previous' => 73.3963
+                    'Name'  => 'Доллар США',
+                    'Value' => 70,
                 ],
             ],
         ];
