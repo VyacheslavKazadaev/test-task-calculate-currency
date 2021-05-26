@@ -14,6 +14,9 @@ return [
     ],
     'language' => 'en-US',
     'components' => [
+        'definitions' => [
+            'app\service\CurrencyGetterClient' => 'app\service\CurrencyGetterClientMock',
+        ],
         'db' => $db,
         'mailer' => [
             'useFileTransport' => true,
