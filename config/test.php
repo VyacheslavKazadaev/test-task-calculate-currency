@@ -13,10 +13,12 @@ return [
         '@npm'   => '@vendor/npm-asset',
     ],
     'language' => 'en-US',
-    'components' => [
+    'container' => [
         'definitions' => [
             'app\service\CurrencyGetterClient' => 'app\service\CurrencyGetterClientMock',
         ],
+    ],
+    'components' => [
         'db' => $db,
         'mailer' => [
             'useFileTransport' => true,
@@ -27,9 +29,9 @@ return [
         'urlManager' => [
             'showScriptName' => true,
         ],
-        'user' => [
-            'identityClass' => 'app\models\User',
-        ],
+//        'user' => [
+//            'identityClass' => 'app\models\User',
+//        ],
         'request' => [
             'cookieValidationKey' => 'test',
             'enableCsrfValidation' => false,
