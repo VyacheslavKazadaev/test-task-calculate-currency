@@ -6,7 +6,7 @@ class CurrencyControllerCest
 {
     public function tryToIndex(ApiTester $I)
     {
-        $I->sendGet('currency/index', [
+        $I->sendGet('currency', [
             'currency' => 'USD',
             'rateCurrency' => 'RUR',
             'rateSum' => '2',
@@ -20,6 +20,16 @@ class CurrencyControllerCest
             'rateCurrency' => 'string',
             'rateSum' => 'string',
             'rate' => 'string',
+        ]);
+    }
+
+    public function tryToIndexError(ApiTester $I)
+    {
+        $I->sendGet('currency', []);
+        $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
+        $I->seeResponseIsJson();
+        $I->seeResponseMatchesJsonType([
+            'error' => 'string',
         ]);
     }
 }

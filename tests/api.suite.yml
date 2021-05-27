@@ -1,9 +1,8 @@
 actor: ApiTester
 modules:
-    enabled:
-        - REST:
-              url: /
-              depends: Yii2
-        - \Helper\Api
-    config:
-        - Yii2
+  enabled:
+    - Asserts
+    - REST:
+        url: '/'
+        depends: Yii2
+        part: [Json]

@@ -28,13 +28,7 @@ class CurrencyService extends Service
         }
 
         $rateCurrency = $currencyRequestModel->rateCurrency;
-        $rate = $infoCurrency['Value'];
-        if ($rateCurrency != 'RUR') {
-            if (!isset($resultCurrencies[$rateCurrency]['Value'])) {
-                throw new \Exception("Currency \"{$rateCurrency}\" not found.");
-            }
-            $rate = round($infoCurrency['Value'] / $resultCurrencies[$rateCurrency]['Value'], 4);
-        }
+        $rate = $this->exchange($resultCurrencies, $currencyRequestModel->rateCurrency, (float)$infoCurrency['Value']);
 
         $rateSum = $currencyRequestModel->rateSum;
         $rateSumResponse = $rateSum > 1
@@ -46,8 +40,21 @@ class CurrencyService extends Service
             'code' => $currencyRequestModel->currency,
             'result' => $result,
             'rateCurrency' => $rateCurrency,
-            'rateSum' => $rateSumResponse, // количество долларов на размен
+            'rateSum' => $rateSumResponse,
             'rate' => (string)$rate,
         ]);
+    }
+
+    private function exchange(array $allCurrencies, string $rateCurrency, float $baseRate): float
+    {
+        $rate = $baseRate;
+        if ($rateCurrency != 'RUR') {
+            if (!isset($allCurrencies[$rateCurrency]['Value'])) {
+                throw new \Exception("Currency \"{$rateCurrency}\" not found.");
+            }
+            $rate = round($baseRate / $allCurrencies[$rateCurrency]['Value'], 4);
+        }
+
+        return $rate;
     }
 }

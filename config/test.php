@@ -27,11 +27,16 @@ return [
             'basePath' => __DIR__ . '/../web/assets',
         ],
         'urlManager' => [
-            'showScriptName' => true,
+            'enablePrettyUrl' => true,
+            'enableStrictParsing' => true,
+            'showScriptName' => false,
+            'rules' => [
+                'currency' => 'currency/index',
+            ],
         ],
-//        'user' => [
-//            'identityClass' => 'app\models\User',
-//        ],
+        'user' => [
+            'identityClass' => 'app\models\User',
+        ],
         'request' => [
             'cookieValidationKey' => 'test',
             'enableCsrfValidation' => false,

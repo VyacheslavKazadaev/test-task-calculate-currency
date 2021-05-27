@@ -38,7 +38,7 @@ class JsonController extends Controller
      */
     protected function setResponseErrorIfAny($response)
     {
-        if (is_array($response) && ArrayHelper::keyExists('errors', $response)) {
+        if (is_array($response) && ArrayHelper::keyExists('error', $response)) {
             $this->setResponseError(ArrayHelper::getValue($response, 'code', 400));
         }
     }

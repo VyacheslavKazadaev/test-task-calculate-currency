@@ -15,8 +15,6 @@ class CurrencyGetterClient extends Service
             curl_setopt_array($ch, [
                 CURLOPT_URL            => 'https://www.cbr-xml-daily.ru/daily_json.js',
                 CURLOPT_RETURNTRANSFER => 1,
-//            CURLOPT_FOLLOWLOCATION => 1,
-//            CURLOPT_VERBOSE        => 1,
                 CURLOPT_SSL_VERIFYHOST => 0,
                 CURLOPT_SSL_VERIFYPEER => false,
                 CURLOPT_HTTPHEADER     => [
@@ -30,11 +28,11 @@ class CurrencyGetterClient extends Service
                 throw new \Exception('Curl error');
             }
 
+            $result = json_decode($response, true);
             $info = curl_getinfo($ch);
             if (empty($info['http_code']) || $info['http_code'] != 200 || !is_array($result)) {
                 throw new \Exception('Currency Response: [' . json_encode($info) . '], response: ' . $response);
             }
-            $result = json_decode($response, true);
         } finally {
             curl_close($ch);
         }
